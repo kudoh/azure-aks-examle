@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: github-service
+spec:
+  template:
+    spec:
+      containers:
+      - name: github-service
+        resources: 
+          requests:
+            memory: 1Gi
+            cpu: 200m
+          limits:
+            memory: 1Gi

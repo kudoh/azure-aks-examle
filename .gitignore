@@ -1,0 +1,10 @@
+.terraform
+target
+bin
+build
+aks-kubeconfig
+terraform/.terraform
+terraform/terraform.tfstate
+terraform/.terraform.tfstate.lock.info
+terraform/terraform.tfstate.backup
+terraform/backend.hcl

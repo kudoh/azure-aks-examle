@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: github-service
+spec:
+  template:
+    spec:
+      containers:
+      - name: github-service
+        env:
+        - name: LOGGING_CONFIG
+          value: /src/app/logback/logback.xml
+        volumeMounts:
+        - name: logback-volume
+          mountPath: /src/app/logback
+      volumes:
+      - name: logback-volume
+        configMap:
+          name: github-logback

@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: github-service
+spec:
+  template:
+    spec:
+      containers:
+      - name: github-service
+        env:
+        - name: AZURE_APPLICATION_INSIGHTS_ENABLED
+          value: "true"
+        - name: AZURE_APPLICATION_INSIGHTS_WEB_ENABLED
+          value: "true"
+        - name: MANAGEMENT_METRICS_EXPORT_AZUREMONITOR_ENABLED
+          value: "true"
+        - name: APP_INSIGHTS_KEY
+          value: e2a5ce25-4ba9-49c7-961a-9a37ae433307

@@ -1,0 +1,30 @@
+github:
+  host: api.github.com
+  protocol: https
+  media-type: application/vnd.github.v3+json
+#  user: foo
+#  password: bar
+  repo-search-path: /search/repositories
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+  metrics:
+    export:
+      azuremonitor:
+        enabled: false
+        instrumentation-key: ${APP_INSIGHTS_KEY:0000}
+
+azure:
+  application-insights:
+    instrumentation-key: ${APP_INSIGHTS_KEY:0000}
+    enabled: false
+    web:
+      enabled: false
+
+logging:
+  level:
+    io.opentracing.contrib.tracerresolver.TracerResolver: error
