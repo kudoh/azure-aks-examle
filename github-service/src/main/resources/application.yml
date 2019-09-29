@@ -1,3 +1,6 @@
+spring:
+  application:
+    name: github-service
 github:
   host: api.github.com
   protocol: https
@@ -17,6 +20,8 @@ management:
       azuremonitor:
         enabled: false
         instrumentation-key: ${APP_INSIGHTS_KEY:0000}
+    tags:
+      app: ${spring.application.name}
 
 azure:
   application-insights:

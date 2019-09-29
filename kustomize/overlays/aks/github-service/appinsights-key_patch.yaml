@@ -8,10 +8,11 @@ spec:
       containers:
       - name: github-service
         env:
-        - name: AZURE_APPLICATION_INSIGHTS_ENABLED
+        - name: AZURE_APPLICATIONINSIGHTS_ENABLED
           value: "true"
-        - name: AZURE_APPLICATION_INSIGHTS_WEB_ENABLED
-          value: "true"
+        # for now, webflux is not supported
+        - name: AZURE_APPLICATIONINSIGHTS_WEB_ENABLED
+          value: "false"
         - name: MANAGEMENT_METRICS_EXPORT_AZUREMONITOR_ENABLED
           value: "true"
         - name: APP_INSIGHTS_KEY
