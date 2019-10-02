@@ -29,7 +29,3 @@ azure:
     enabled: false
     web:
       enabled: false
-
-logging:
-  level:
-    io.opentracing.contrib.tracerresolver.TracerResolver: error
