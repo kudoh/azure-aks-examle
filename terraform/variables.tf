@@ -3,7 +3,7 @@ variable "location" {
 }
 
 variable "k8s_cluster_name" {
-  default = "k8s_cluster"
+  default = "k8s"
 }
 
 variable "k8s_vm_count" {
