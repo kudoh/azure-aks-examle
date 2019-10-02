@@ -8,3 +8,4 @@ terraform/terraform.tfstate
 terraform/.terraform.tfstate.lock.info
 terraform/terraform.tfstate.backup
 terraform/backend.hcl
+terraform/terraform.tfvars

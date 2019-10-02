@@ -89,7 +89,12 @@ AKS_SP_ID=$(az ad sp list --query "[?displayName=='aks'].appId" --output tsv)
 ### Azureリソース作成
 
 ```bash
-terraform apply -var 'k8s_vm_count=2' -var "k8s_client_id=${AKS_SP_ID}" -var "k8s_client_secret=${AKS_SP_PASSWORD}"
+cat << EOF > terraform.tfvars
+k8s_vm_count      = 2
+k8s_client_id     = "${AKS_SP_ID}"
+k8s_client_secret = "${AKS_SP_PASSWORD}"
+EOF
+terraform apply
 
 # デフォルトでkubectlが利用するkubeconfigを変更
 export KUBECONFIG=$HOME/.kube/aksconfig
@@ -107,7 +112,9 @@ APP_FQDN=$(terraform output public_ip_fqdn)
 REDIS_PASS=$(terraform output redis_primary_key)
 # Application Insights Key
 APP_INSIGHTS_KEY=$(terraform output app_insights_instrumentation_key)
-# => kustomize/overlays/aks/github-service/appinsights-key_patch.yamlの値を書き換え
+# => 以下のkeyを書き換え
+# kustomize/overlays/aks/github-service/appinsights-key_patch.yaml
+# kustomize/overlays/aks/api-gateway/appinsights-key_patch.yaml
 ```
 
 ---
@@ -142,7 +149,8 @@ helm init --service-account tiller
 # Nginx Ingress controller
 helm upgrade nginx-ingress --install stable/nginx-ingress \
    --set controller.service.loadBalancerIP="${APP_PUBLIC_IP}" \
-   --set nodeSelector."beta.kubernetes.io/os"=linux
+   --set nodeSelector."beta.kubernetes.io/os"=linux \
+   --wait
 # check external ip
 kubectl get svc -l app=nginx-ingress
 
@@ -166,6 +174,7 @@ kubectl apply -k overlays/aks
 ## Clean up
 
 ```bash
+helm delete --purge nginx-ingress
 terraform destroy
 
 TERRAFORM_SP_ID=$(az ad sp list --query "[?displayName=='terraform'].appId" -o tsv)
