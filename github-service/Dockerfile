@@ -14,7 +14,7 @@ ENV APP_DIR=/usr/local/app
 RUN mkdir -p ${APP_DIR}
 
 COPY --from=build /src/build/libs/github-service.jar ${APP_DIR}/
-COPY applicationinsights-agent-2.5.0.jar ${APP_DIR}/
+COPY applicationinsights-agent-2.5.0.jar AI-Agent.xml ${APP_DIR}/
 
 EXPOSE 8080
 

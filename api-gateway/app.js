@@ -6,6 +6,14 @@ const tracer = require('./tracer')
 const { Tags, FORMAT_HTTP_HEADERS } = require('opentracing');
 const url = require('url');
 
+// azure application insights
+const appInsights = require("applicationinsights");
+appInsights
+  .setup() // use enviroment variable APPINSIGHTS_INSTRUMENTATIONKEY
+  .setAutoCollectConsole(true, true)
+  .setSendLiveMetrics(true);
+appInsights.start();
+
 const gatewayRouter = require('./routes/gateway');
 
 const app = express();

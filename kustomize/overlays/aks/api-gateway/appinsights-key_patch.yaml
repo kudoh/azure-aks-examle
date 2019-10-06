@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+spec:
+  template:
+    spec:
+      containers:
+      - name: api-gateway
+        env:
+        - name: APPINSIGHTS_INSTRUMENTATIONKEY
+          value: 3701c519-c49d-4d06-824b-06e85a9025c5

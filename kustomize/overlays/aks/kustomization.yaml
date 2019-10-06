@@ -8,6 +8,7 @@ resources:
 patchesStrategicMerge:
 - api-gateway/replicas_patch.yaml
 - api-gateway/resources_patch.yaml
+- api-gateway/appinsights-key_patch.yaml
 - github-service/replicas_patch.yaml
 - github-service/resources_patch.yaml
 - github-service/appinsights-key_patch.yaml

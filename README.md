@@ -115,6 +115,7 @@ APP_INSIGHTS_KEY=$(terraform output app_insights_instrumentation_key)
 # => 以下のkeyを書き換え
 # kustomize/overlays/aks/github-service/appinsights-key_patch.yaml
 # kustomize/overlays/aks/api-gateway/appinsights-key_patch.yaml
+# repo-search-ui/src/main.js
 ```
 
 ---
@@ -140,12 +141,32 @@ docker push $ACR_LOGIN_SVR/repo-search-ui:v1
 
 ## アプリデプロイ
 
-AKSに対してアプリをデプロイする。リソースマニフェストはKustomizeのOverlayを使う。
+AKSに対してアプリをデプロイする。リソースマニフェストはKustomizeのOverlayで構成する。
 
 ```bash
 # Helm
-kubectl apply -f https://raw.githubusercontent.com/kudoh/k8s-hands-on/master/helm/tiller-rbac.yaml
-helm init --service-account tiller
+cat << EOF > tiller-rbac.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: tiller
+  namespace: kube-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+ name: tiller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: tiller
+    namespace: kube-system
+EOF
+kubectl apply -f tiller-rbac.yaml
+helm init --service-account tiller --wait
 # Nginx Ingress controller
 helm upgrade nginx-ingress --install stable/nginx-ingress \
    --set controller.service.loadBalancerIP="${APP_PUBLIC_IP}" \
@@ -167,6 +188,9 @@ echo -n $REDIS_PASS > overlays/aks/.env/redis-pass
 
 # アプリケーションのデプロイ
 kubectl apply -k overlays/aks
+
+# 全てのPodがRunningしたらブラウザでアクセス
+open http://$APP_FQDN
 ```
 
 ---

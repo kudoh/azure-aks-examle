@@ -10,10 +10,9 @@ spec:
         env:
         - name: AZURE_APPLICATIONINSIGHTS_ENABLED
           value: "true"
-        # for now, webflux is not supported
         - name: AZURE_APPLICATIONINSIGHTS_WEB_ENABLED
-          value: "false"
+          value: "true"
         - name: MANAGEMENT_METRICS_EXPORT_AZUREMONITOR_ENABLED
           value: "true"
         - name: APP_INSIGHTS_KEY
-          value: e2a5ce25-4ba9-49c7-961a-9a37ae433307
+          value: 3701c519-c49d-4d06-824b-06e85a9025c5

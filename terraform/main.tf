@@ -55,7 +55,7 @@ resource "azurerm_application_insights" "k8s" {
   name                = "k8s-tf-appinsights"
   location            = "${azurerm_resource_group.dev.location}"
   resource_group_name = "${azurerm_resource_group.dev.name}"
-  application_type    = "java"
+  application_type    = "web"
 }
 
 resource "azurerm_log_analytics_workspace" "k8s" {
