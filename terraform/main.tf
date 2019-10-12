@@ -1,9 +1,5 @@
 terraform {
   backend "azurerm" {
-    resource_group_name   = "terraform_state"
-    storage_account_name  = "terraform0905"
-    container_name        = "tfstate"
-    key                   = "dev.tfstate"
   }
 }
 
@@ -78,7 +74,7 @@ resource "azurerm_log_analytics_solution" "k8s" {
   }
 }
 
-resource "azurerm_kubernetes_cluster" "k8s_cluster" {
+resource "azurerm_kubernetes_cluster" "k8s" {
 
   name                = "${var.k8s_cluster_name}"
   location            = "${azurerm_resource_group.dev.location}"
